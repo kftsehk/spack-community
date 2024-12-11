@@ -1,0 +1,46 @@
+packages:
+  all:
+    compiler: [gcc, aocc, clang, oneapi, intel, nvhpc]
+    permissions:
+      read: world
+      write: user
+    providers:
+      D: [ldc]
+      armci: [armcimpi]
+      awk: [gawk]
+      blas: [openblas, amdblis]
+      c: [gcc]
+      cxx: [gcc]
+      daal: [intel-oneapi-daal]
+      elf: [elfutils]
+      fftw-api: [fftw, amdfftw]
+      flame: [libflame, amdlibflame]
+      fortran: [gcc]
+      fortran-rt: [gcc-runtime, intel-oneapi-runtime]
+      fuse: [libfuse]
+      gl: [glx, osmesa]
+      glu: [mesa-glu, openglu]
+      go-or-gccgo-bootstrap: [go-bootstrap, gcc]
+      golang: [go, gcc]
+      iconv: [libiconv]
+      ipp: [intel-oneapi-ipp]
+      java: [openjdk, jdk, ibm-java]
+      jpeg: [libjpeg-turbo, libjpeg]
+      lapack: [openblas, amdlibflame]
+      libc: [glibc, musl]
+      libgfortran: [gcc-runtime]
+      libglx: [mesa+glx]
+      libifcore: [intel-oneapi-runtime]
+      libllvm: [llvm]
+      lua-lang: [lua, lua-luajit-openresty, lua-luajit]
+      luajit: [lua-luajit-openresty, lua-luajit]
+      mariadb-client: [mariadb-c-client, mariadb]
+      mkl: [intel-oneapi-mkl]
+      mpe: [mpe2]
+      mpi: [openmpi, mpich]
+      zlib-api: [zlib-ng+compat]
+  egl:
+    buildable: false
+    externals:
+      - prefix: /usr
+        spec: egl@1.5.0

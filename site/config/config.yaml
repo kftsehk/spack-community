@@ -1,0 +1,39 @@
+config:
+  aliases:
+    '?': tutorial
+    a: add
+    c: concretize
+    cacheclean: clean -sdfm
+    cc: compiler
+    ccs: compilers
+    concretise: concretize
+    containerise: containerize
+    d: debug
+    e: env
+    ex: external
+    i: info
+    in: install
+    l: list
+    li: find
+    lmod: module lmod
+    lock: concretize
+    ls: list
+    lscc: compiler list
+    lsenv: env list
+    rm: remove
+    s: spec
+    search: list
+    sync: install -v --only-concrete --show-log-on-error
+    t: tags
+    un: uninstall
+    v: view
+    vars: info --no-dependencies --no-versions
+    vers: versions
+  connect_timeout: 60
+  db_lock_timeout: 30
+  install_tree:
+    projections:
+      all: "{architecture}/{compiler.name}-{compiler.version}/{name}-{version}-{hash}"
+  shared_linking:
+    bind: false
+    type: runpath

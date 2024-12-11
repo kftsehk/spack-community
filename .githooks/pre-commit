@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -eou pipefail
+
+git ls-files '*.yml' '*.yaml' | xargs -r -P $(nproc) -i yq -w 10000 -i -S -Y . {}

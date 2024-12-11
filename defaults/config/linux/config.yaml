@@ -1,0 +1,15 @@
+config:
+  build_stage:
+    - $tempdir/spack/stage/build
+    - $user_cache_path/stage/build
+  environments_root: $spack/dist/environments
+  install_tree:
+    root: $spack/dist/apps
+  license_dir: $spack/dist/licenses
+  misc_cache: $user_cache_path/cache/misc
+  source_cache: $user_cache_path/cache/repo
+  template_dirs:
+    - $spack/share/spack/templates
+    - $spack/dist/templates
+    - $user_cache_path/templates
+  test_stage: $user_cache_path/test

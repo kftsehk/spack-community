@@ -1,0 +1,55 @@
+modules:
+  default:
+    arch_folder: true
+    enable:
+      - lmod
+    lmod:
+      all:
+        autoload: run
+      core_compilers:
+        - gcc@13.3.0.spack
+      hide_implicits: true
+      hierarchy:
+        - mpi
+      projections:
+        all: "{target.name}/{name}/{version}"
+        anaconda3: "{name}/{version}"
+        aocc: "{name}/{version}"
+        cuda: "{name}/{version}"
+        gcc: "{name}/{version}"
+        intel-oneapi-compilers: "{name}/{version}"
+        intel-oneapi-compilers-classic: "{name}/{version}"
+        jdk: "{name}/{version}"
+        julia: "{name}/{version}"
+        llvm: "{name}/{version}"
+        matlab: "{name}/{version}"
+        miniconda3: "{name}/{version}"
+        nvhpc: "{name}/{version}"
+        openjdk: "{name}/{version}"
+        perl: "{name}/{version}"
+        python: "{name}/{version}"
+        r: "{name}/{version}"
+        rstudio: "{name}/{version}"
+  prefix_inspections:
+    ./:
+      - CMAKE_PREFIX_PATH
+    ./bin:
+      - PATH
+    ./lib:
+      - LD_LIBRARY_PATH
+    ./lib/pkgconfig:
+      - PKG_CONFIG_PATH
+    ./lib64:
+      - LD_LIBRARY_PATH
+    ./lib64/pkgconfig:
+      - PKG_CONFIG_PATH
+    ./man:
+      - MANPATH
+    ./sbin:
+      - PATH
+    ./share/aclocal:
+      - ACLOCAL_PATH
+    ./share/man:
+      - MANPATH
+    ./share/pkgconfig:
+      - PKG_CONFIG_PATH

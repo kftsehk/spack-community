@@ -1,0 +1,5 @@
+config:
+  environments_root: $user_cache_path/environments
+  install_tree:
+    root: $user_cache_path/apps
+  license_dir: $user_cache_path/licenses
