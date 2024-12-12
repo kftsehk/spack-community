@@ -1,0 +1,36 @@
+spack:
+  concretizer:
+    reuse: false
+    unify: false
+  specs:
+    - matrix:
+        - - "gcc +binutils~bootstrap+graphite+nvptx+piclibs languages=c,c++,fortran,lto"
+        - - "@14"
+          - "@13"
+          - '@12'
+        - - "^binutils@2.43"
+    - matrix:
+        - - "intel-oneapi-compilers +amd +nvidia"
+        - - "@2025"
+          - "@2024"
+          - "@2023"
+          - "@2022"
+          - "@2021"
+    - matrix:
+        - - "aocc +license_agreed"
+        - - "@4"
+          - "@5"
+    - intel-oneapi-compilers-classic@2021
+    - matrix:
+        - - "nvhpc +blas install_type=network +lapack +mpi"
+          - "@24.11 default_cuda=12.6 ^cuda@12.6"
+          - "@24.7 default_cuda=12.5 ^cuda@12.5"
+          - "@24.5 default_cuda=12.4 ^cuda@12.4"
+          - "@24.3 default_cuda=12.3 ^cuda@12.3"
+          - "@23.11 default_cuda=12.3 ^cuda@12.3"
+          - "@23.9 default_cuda=12.2 ^cuda@12.2"
+          - "@23.5 default_cuda=12.1 ^cuda@12.1"
+          - "@23.3 default_cuda=12.0 ^cuda@12.0"
+          - "@22.11 default_cuda=11.8 ^cuda@11.8"
+        - - "+allow-unsupported-compilers +dev"
+  view: false
