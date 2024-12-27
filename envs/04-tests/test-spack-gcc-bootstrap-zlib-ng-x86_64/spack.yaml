@@ -1,0 +1,36 @@
+spack:
+  # TODO: Add the "bootstrap" compiler from "spack-gcc-bootstrap"
+  # compilers:
+  #   - compiler:
+  #       environment: {}
+  #       extra_rpaths: []
+  #       flags: {}
+  #       modules: []
+  #       operating_system: rocky9
+  #       paths:
+  #         cc: gcc
+  #         cxx: g++
+  #         f77: gfortran
+  #         fc: gfortran
+  #       spec: gcc@=13.3.0.bootstrap languages='c,c++,fortran'
+  #       target: x86_64
+  concretizer:
+    duplicates:
+      strategy: full
+    reuse: false
+    targets:
+      granularity: microarchitectures
+      host_compatible: false
+    unify: false
+  specs:
+    - matrix:
+        - - zlib-ng+compat
+        - - target=icelake
+          - target=sapphirerapids
+          - target=x86_64
+          - target=x86_64_v3
+          - target=x86_64_v4
+          - target=zen3
+          - target=zen4
+        - - "%gcc@13.3.0.bootstrap"
+  view: false

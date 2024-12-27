@@ -1,0 +1,19 @@
+spack:
+  concretizer:
+    targets:
+      granularity: generic
+      host_compatible: true
+  # TODO: define host compiler
+  # packages:
+  #   gcc:
+  #     externals:
+  #       - extra_attributes:
+  #           compilers:
+  #             c: /usr/bin/gcc
+  #             cxx: /usr/bin/g++
+  #             fortran: /usr/bin/gfortran
+  #         prefix: /usr
+  #         spec: gcc@11.5.0.el9 languages='c,c++,fortran'
+  specs:
+    - 'gcc@13.3.0 +binutils+bootstrap+graphite+piclibs languages="c,c++,fortran" target=x86_64_v4 %gcc@11.5.0.el9 ^binutils@2.43: +gas +headers +ld +lto +gold +nls target=x86_64_v4 %gcc@11.5.0.el9 ^zlib target=x86_64_v4 %gcc@11.5.0.el9'
+  view: false
