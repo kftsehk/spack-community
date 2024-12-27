@@ -2,4 +2,4 @@
 
 set -eou pipefail
 
-git ls-files '*.yml' '*.yaml' | xargs -r -P $(nproc) -i yq -w 10000 -i -S -Y . {}
+fd -uu0 --one-file-system '.*\.ya?ml' | xargs -rt0 -P $(nproc) -i yq -w 10000 -i -S -Y . {}
