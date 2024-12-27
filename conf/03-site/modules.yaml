@@ -35,6 +35,8 @@ modules:
       - CMAKE_PREFIX_PATH
     ./bin:
       - PATH
+    ./condabin:
+      - PATH
     ./lib:
       - LD_LIBRARY_PATH
     ./lib/pkgconfig:

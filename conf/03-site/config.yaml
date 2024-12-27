@@ -6,8 +6,6 @@ config:
     cacheclean: clean -sdfm
     cc: compiler
     ccs: compilers
-    concretise: concretize
-    containerise: containerize
     d: debug
     e: env
     ex: external
@@ -16,11 +14,10 @@ config:
     l: list
     li: find
     lmod: module lmod
-    lock: concretize
+    lock: concretize -f
     ls: list
     lscc: compiler list
     lsenv: env list
-    rm: remove
     s: spec
     search: list
     sync: install -v --only-concrete --show-log-on-error
@@ -29,11 +26,16 @@ config:
     v: view
     vars: info --no-dependencies --no-versions
     vers: versions
-  connect_timeout: 60
-  db_lock_timeout: 30
-  install_tree:
-    projections:
-      all: "{architecture}/{compiler.name}-{compiler.version}/{name}-{version}-{hash}"
+  build_jobs: 256
+  build_stage:
+    - $tempdir/spack-stage/build
+  connect_timeout: 30
+  flags:
+    keep_werror: "none"
+  misc_cache: $tempdir/spack-stage/misc
   shared_linking:
-    bind: false
-    type: runpath
+    missing_library_policy: warn
+  source_cache: $tempdir/spack-stage/repo
+  template_dirs:
+    - $spack/share/spack/templates/dist
+  test_stage: $tempdir/spack-stage/test
