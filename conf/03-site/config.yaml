@@ -37,5 +37,5 @@ config:
     missing_library_policy: warn
   source_cache: $tempdir/spack-stage/repo
   template_dirs:
-    - $spack/share/spack/templates/dist
+    - $spack/dist/templates
   test_stage: $tempdir/spack-stage/test
