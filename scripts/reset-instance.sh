@@ -71,26 +71,6 @@ function spack::dist::reset() {
   spack lmod refresh -y --delete-tree
 }
 
-spack::dist::reset_user() {
-  mkdir -p $SPACK_USER_CACHE_PATH
-  cd $SPACK_USER_CACHE_PATH || return 1
-  echo "I=> Cleaning user spack"
-  fd --one-file-system -uu0a . . | xargs -r0 -P $(nproc) -n 64 rm -rf
-  mkdir envs
-  cd envs || return 1
-  echo "I=> Creating user spack env"
-  ls $SPACK_ROOT/site/envs/04-tests | xargs -I {} mkdir -p {}
-  ls $SPACK_ROOT/site/envs/04-tests | xargs -I {} ln -s $SPACK_ROOT/site/envs/04-tests/{}/spack.yaml {}/spack.yaml
-  ls -l */spack.yaml
-
-  cd $SPACK_USER_CACHE_PATH || return 1
-  spack::global::unload_variant
-  spack::global::load_variant $variant
-  echo "I=> Bootstrap user spack dist"
-  spack bootstrap now
-  spack lmod refresh -y --delete-tree
-}
-
 if [ -z "$variant" ]; then
   echo "E=> SPACK_VARIANT is not set"
   exit 1
@@ -102,14 +82,8 @@ spack::global::load_variant $variant
 echo "I=> Resetting spack instance"
 echo "    SPACK_VARIANT: $variant"
 echo "    SPACK_ROOT: $SPACK_ROOT"
-echo "    SPACK_USER_CACHE_PATH: $SPACK_USER_CACHE_PATH"
 
-if [[ ! "$SPACK_USER_CACHE_PATH" =~ "$HOME/" ]]; then
-  echo "E=> SPACK_USER_CACHE_PATH must be set to a directory in your home"
-  exit 1
-fi
-
-read -p "I=> Continue? [y/N] " -n 1 -r
+read -p "I=> Continue? [y/N] " -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
   return 1
 fi
@@ -118,8 +92,3 @@ export SPACK_DISABLE_LOCAL_CONFIG="1"
 spack::global::unload_variant
 spack::global::load_variant $variant
 spack::dist::reset
-
-unset SPACK_DISABLE_LOCAL_CONFIG
-spack::global::unload_variant
-spack::global::load_variant $variant
-spack::dist::reset_user
