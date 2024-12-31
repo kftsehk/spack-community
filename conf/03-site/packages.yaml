@@ -1,13 +1,10 @@
 packages:
   all:
-    compiler: [gcc, aocc, clang, oneapi, intel, nvhpc]
+    compiler: [gcc, aocc, clang, intel, llvm, nvhpc, oneapi]
     permissions:
       read: world
       write: user
     providers:
-      D: [ldc]
-      armci: [armcimpi]
-      awk: [gawk]
       blas: [openblas, amdblis]
       c: [gcc]
       cxx: [gcc]
@@ -20,25 +17,25 @@ packages:
       fuse: [libfuse]
       gl: [glx, osmesa]
       glu: [mesa-glu, openglu]
-      go-or-gccgo-bootstrap: [go-bootstrap, gcc]
-      golang: [go, gcc]
+      go-or-gccgo-bootstrap: [go-bootstrap]
+      golang: [go]
       iconv: [libiconv]
       ipp: [intel-oneapi-ipp]
-      java: [openjdk, jdk, ibm-java]
+      java: [openjdk, jdk]
       jpeg: [libjpeg-turbo, libjpeg]
       lapack: [openblas, amdlibflame]
-      libc: [glibc, musl]
+      libc: [glibc]
       libgfortran: [gcc-runtime]
       libglx: [mesa+glx]
       libifcore: [intel-oneapi-runtime]
       libllvm: [llvm]
-      lua-lang: [lua, lua-luajit-openresty, lua-luajit]
+      lua-lang: [lua-luajit-openresty, lua]
       luajit: [lua-luajit-openresty, lua-luajit]
       mariadb-client: [mariadb-c-client, mariadb]
       mkl: [intel-oneapi-mkl]
-      mpe: [mpe2]
-      mpi: [openmpi, mpich]
-      zlib-api: [zlib-ng+compat]
+      mpi: [openmpi, mpich, intel-oneapi-mpi, mvapich2]
+      uuid: [libuuid, util-linux-uuid]
+      zlib-api: [zlib-ng+compat, zlib]
   egl:
     buildable: false
     externals:
