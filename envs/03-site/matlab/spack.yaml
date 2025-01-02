@@ -1,0 +1,13 @@
+spack:
+  concretizer:
+    targets:
+      granularity: generic
+      host_compatible: true
+  modules:
+    default:
+      lmod:
+        matlab:
+          template: matlab-template.lua
+  specs:
+    - matlab@R2019b +build_dependencies mode=silent key=36341-59223-41894-38102-24675-08828-15043-55294-13743-15966-17969-26639-44252-14537-26246-28210-10779-18949 use_archive="file:///opt/shared/installers/matlab/matlab-R2019b-archive.tar" target=x86_64_v4 %gcc@13.3.0.spack
+  view: false
