@@ -1,0 +1,21 @@
+spack:
+  concretizer:
+    targets:
+      granularity: generic
+    unify: false
+  definitions:
+    - core_target:
+        - "target=x86_64_v4 %gcc@13.3.0.spack"
+    - python:
+        - matrix:
+            - - python +optimizations
+            - ["@3.9", "@3.10", "@3.11", "@3.12", "@3.13"]
+            - - $core_target
+    - runtime:
+        - matrix:
+            - ["anaconda3", "emacs+json", "go", "openjdk@21", "openjdk@17", "julia", "lua", "perl", "rust"]
+            - - $core_target
+  specs:
+    - $python
+    - $runtime
+  view: false
