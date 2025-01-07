@@ -60,6 +60,7 @@ spack:
             - - $core_target
   specs:
     - $gcc
+    - $gcc-nvptx
     - $aocc
     - $oneapi
     - $oneapi-nvptx
