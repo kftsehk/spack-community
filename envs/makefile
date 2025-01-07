@@ -17,12 +17,14 @@ $(TARGETS):
 	) 2>&1 | tee -a $@
 
 check:
+	_incomplete_build=0; \
 	for env in $$(find -maxdepth 1 -mindepth 1 -type d | cut -d/ -f2); do \
 		if spack -e $$env find -c | grep -v -E '^(\[[+e]\]|-- |==> |$$)'; then \
 			echo "[$$env] build incomplete"; \
-		  exit 1; \
+			_incomplete_build=1; \
 		fi; \
-	done
+	done; \
+	exit $$_incomplete_build
 
 clean:
 	spack cacheclean
