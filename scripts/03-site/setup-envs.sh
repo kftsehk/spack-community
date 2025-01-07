@@ -11,6 +11,8 @@ fi
 
 # function automatic_path_detection(){
 declare _spack_script_path
+declare _spack_no_confirm
+
 if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
   _spack_script_path="${BASH_SOURCE[0]}"
 else
@@ -23,6 +25,13 @@ else
     unset _spack_script_path
     exit 1
   fi
+fi
+
+if [ "${1:-}" == "-y" ]; then
+  _spack_no_confirm=1
+  shift
+else
+  _spack_no_confirm=0
 fi
 
 function get_variant() {
@@ -56,13 +65,24 @@ function _spack_variant_init() {
     echo
   ) >&2
 
-  read -p "==> Activate spack instance [$_spack_variant]? [y/N] " -r _spack_confirm
-  if [[ ! "$_spack_confirm" =~ ^[Yy]$ ]]; then
-    return 1
+  if [ $_spack_no_confirm -eq 1 ]; then
+    echo "==> Forcing to activate spack instance [$_spack_variant]" >&2
+  else
+    read -p "==> Activate spack instance [$_spack_variant]? [y/N] " -r _spack_confirm
+    if [[ ! "$_spack_confirm" =~ ^[Yy]$ ]]; then
+      return 1
+    fi
+    (
+      echo
+      echo "i=> You can use '-y' option to skip this confirmation next time."
+      echo
+      sleep 3
+    ) >&2
   fi
 
   (
     echo "==> Checking spack config and cache paths"
+    echo
     echo "    Shared apps and modules are located at $_spack_root/dist"
   ) >&2
 
@@ -88,7 +108,10 @@ function _spack_variant_init() {
       echo "$_spack_variant" >"${_spack_user_config_path}/.spack-cache.variant"
     ) >&2
   fi
-  echo "    Your spack config is located at ${_spack_user_config_path}" >&2
+  (
+    echo "    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    echo "    Your spack config is located at ${_spack_user_config_path}"
+  ) >&2
 
   if [[ "$_spack_user_cache_path/" =~ "$HOME/.spack/" ]]; then
     (
@@ -110,21 +133,24 @@ function _spack_variant_init() {
     echo "$_spack_variant" >"${_spack_user_cache_path}/.spack-cache.variant" >&2
   fi
   (
-    echo
     echo "    Your spack apps are located at ${_spack_user_cache_path}"
+    echo
   ) >&2
   export SPACK_VARIANT="$_spack_variant"
   export SPACK_ROOT="$_spack_root"
   export SPACK_SYSTEM_CONFIG_PATH="$_spack_system_config_path"
   export SPACK_USER_CONFIG_PATH="$_spack_user_config_path"
   export SPACK_USER_CACHE_PATH="$_spack_user_cache_path"
-  return 0
+  export TMPDIR="${TMPDIR:-/dev/shm/user/$(id -u)/tmp}"
+  export TMP="${TMPDIR}"
+  mkdir -p "$TMPDIR"
+  return $?
 }
 
 _spack_variant_init
 _spack_variant_init_ret=$?
 unset -f _spack_variant_init
-unset _spack_variant _spack_root _spack_system_config_path _spack_user_config_path _spack_user_cache_path
+unset _spack_variant _spack_no_confirm _spack_root _spack_system_config_path _spack_user_config_path _spack_user_cache_path
 if [ $_spack_variant_init_ret -eq 0 ]; then
   unset _spack_variant_init_ret
   echo "==> Setting up spack [$SPACK_VARIANT] environment" >&2
@@ -135,7 +161,10 @@ if [ $_spack_variant_init_ret -eq 0 ]; then
     if [ ! -e "$SPACK_USER_CACHE_PATH/config.yaml" ]; then
       echo "config: {}" >"$SPACK_USER_CACHE_PATH/config.yaml"
     fi
-    echo "==> First launch: bootstrapping spack [$SPACK_VARIANT]" >&2
+    (
+      echo "==> First launch: bootstrapping spack [$SPACK_VARIANT]"
+      echo "    This may take a few minutes, please wait..."
+    ) >&2
     spack bootstrap now
   fi
   (
