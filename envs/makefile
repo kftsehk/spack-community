@@ -5,7 +5,7 @@ TARGETS := $(addprefix .,$(addsuffix .build,$(shell find -maxdepth 1 -mindepth 1
 	sudo dnf --refresh upgrade -y 2>&1 | tee $@
 
 $(TARGETS):
-.%.build: $*/ .dnf-upgrade.build
+.%.build: %/spack.yaml .dnf-upgrade.build
 	spack -e $* lock -U 2>&1 | tee $@
 	( \
 		for i in {1..4}; do \
