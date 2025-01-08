@@ -29,12 +29,12 @@ spack:
     - oneapi-nvptx:
         - matrix:
             - - "intel-oneapi-compilers +nvidia"
-            - ["@2025", "@2024", "@2023"]
+            - ["@2025", "@2024"]
             - - $core_target
     - oneapi:
         - matrix:
             - - "intel-oneapi-compilers"
-            - ["@2022", "@2021"]
+            - ["@2023", "@2022"]
             - - $core_target
     - intel:
         - matrix:
