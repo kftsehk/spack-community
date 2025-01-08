@@ -141,7 +141,7 @@ function _spack_variant_init() {
   export SPACK_SYSTEM_CONFIG_PATH="$_spack_system_config_path"
   export SPACK_USER_CONFIG_PATH="$_spack_user_config_path"
   export SPACK_USER_CACHE_PATH="$_spack_user_cache_path"
-  export TMPDIR="${TMPDIR:-/dev/shm/user/$(id -u)/tmp}"
+  export TMPDIR="${TMPDIR:-/dev/shm/user-$(id -u)/tmp}"
   export TMP="${TMPDIR}"
   mkdir -p "$TMPDIR"
   return $?
