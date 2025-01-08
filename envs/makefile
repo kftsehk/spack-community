@@ -34,7 +34,8 @@ lmod: check
 		spack_args="-y"; \
 	done
 
-gc: lmod
+gc:
+	echo n | spack gc -E -b | grep @ | grep -v -E ' / ' | awk '{printf "/%s\n",$$1}' | xargs -r -t -P $$(nproc) -i spack uninstall --force -y {}
 	spack gc -E -b -y
 
 clean:
