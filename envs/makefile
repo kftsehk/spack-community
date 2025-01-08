@@ -26,8 +26,16 @@ check:
 	done; \
 	exit $$_incomplete_build
 
+lmod: check
+	spack_args="--delete-tree -y"; \
+	for env in $$(find -maxdepth 1 -mindepth 1 -type d | cut -d/ -f2); do \
+		echo spack -e $$env lmod refresh $$spack_args; \
+		spack -e $$env lmod refresh $$spack_args; \
+		spack_args="-y"; \
+	done
+
+gc: lmod
+	spack gc -E -b -y
+
 clean:
 	spack cacheclean
-
-dist-clean: clean
-	spack gc -E -b -y
