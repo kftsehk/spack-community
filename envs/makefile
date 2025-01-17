@@ -1,20 +1,28 @@
-SHELL := /usr/bin/bash
-TARGETS := $(addprefix .,$(addsuffix .build,$(shell find -maxdepth 1 -mindepth 1 -type d | cut -d/ -f2)))
+DEBUG ?= 0
+DEVELOPMENT ?= 1
+NUM_PARALLEL_BUILDS := 4
 
-.dnf-upgrade.build:
-	sudo dnf --refresh upgrade -y 2>&1 | tee $@
+SHELL := /usr/bin/bash -o pipefail
+SUDO  := sudo
+SPACK_EXE := spack
 
-$(TARGETS):
-.%.build: %/spack.yaml .dnf-upgrade.build
-	spack -e $* lock -U 2>&1 | tee $@
-	( \
-		for i in {1..4}; do \
-			spack -e $* sync & \
-		done; \
-		for i in {1..4}; do \
-			wait; \
-		done; \
-	) 2>&1 | tee -a $@
+# for debugging
+FILE_TARGETS :=
+GENERATED_TARGETS :=
+PHONY_TARGETS :=
+
+default: build@__all__
+
+include .makefile.incs/preflight.mak
+include .makefile.incs/debug.mak
+include .makefile.incs/dnf.mak
+include .makefile.incs/build/common.mak
+include .makefile.incs/build/entrypoints.mak
+include .makefile.incs/build/spack-env-deps.mak
+include .makefile.incs/build/spack-build.mak
+
+.SUFFIXES: .build .lock .yaml
+.PHONY: $(PHONY_TARGETS)
 
 check:
 	_incomplete_build=0; \
@@ -26,7 +34,7 @@ check:
 	done; \
 	exit $$_incomplete_build
 
-lmod: check
+lmod:
 	spack_args="--delete-tree -y"; \
 	for env in $$(find -maxdepth 1 -mindepth 1 -type d | cut -d/ -f2); do \
 		echo spack -e $$env lmod refresh $$spack_args; \

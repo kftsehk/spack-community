@@ -1,5 +1,6 @@
-.*.build
 .spack-env/
+*.build
+*.log
 apps/
 cache/
 lmod/
