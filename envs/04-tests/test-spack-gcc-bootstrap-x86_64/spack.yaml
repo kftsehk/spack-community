@@ -1,33 +1,24 @@
 spack:
   # TODO: define gcc@13.3.0.bootstrap at compilers.yaml
   concretizer:
-    duplicates:
-      strategy: full
     reuse: false
     targets:
       granularity: microarchitectures
       host_compatible: false
     unify: false
+  definitions:
+    - cc-test: ["zlib-ng ++ipo build_system=cmake ^zlib"]
   packages:
     all:
       providers:
-        zlib-api: ["zlib-ng ++ipo build_system=cmake"]
+        zlib-api: ["zlib"]
   specs:
     - matrix:
-        - - zlib-ng ++ipo build_system=cmake
-          - arpack-ng ~mpi ++ipo +icb
-          - iptraf-ng
-          - crosstool-ng
-          - libcap-ng
-          - procps-ng
-          - raxml-ng ++ipo ~mpi
-          - stress-ng
+        - - $cc-test
         - - target=icelake
           - target=sapphirerapids
-          - target=x86_64
           - target=x86_64_v3
           - target=x86_64_v4
-          - target=zen3
           - target=zen4
         - - "%gcc@13.3.0.bootstrap"
   view: false

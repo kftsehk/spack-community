@@ -14,10 +14,9 @@ spack:
   specs:
     - matrix:
         - - $cc-test
-        - - target=icelake
-          - target=sapphirerapids
-          - target=x86_64_v3
-          - target=x86_64_v4
+        - - target=x86_64_v3
+          - target=zen3
           - target=zen4
-        - - "%gcc@13.3.0.spack"
+        - - "%aocc@4"
+          - "%aocc@5"
   view: false
