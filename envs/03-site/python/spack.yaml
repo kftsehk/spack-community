@@ -6,10 +6,12 @@ spack:
   definitions:
     - core_target:
         - "target=x86_64_v4 %gcc@13.3.0.spack"
-    - runtime:
+    - python:
         - matrix:
-            - ["emacs+json", "go", "openjdk@21", "openjdk@17", "julia", "lua", "perl", "rust"]
+            - - python +optimizations
+            - ["@3.9", "@3.10", "@3.11", "@3.12", "@3.13"]
             - - $core_target
   specs:
-    - $runtime
+    - $python
+    - anaconda3
   view: false

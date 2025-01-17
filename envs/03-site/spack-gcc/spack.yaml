@@ -4,7 +4,6 @@ spack:
     targets:
       granularity: generic
       host_compatible: true
-  # TODO: define gcc@13.3.0.bootstrap at compilers.yaml
   specs:
     - "gcc@13.3.0 +binutils+bootstrap+graphite+piclibs+profiled languages='c,c++,fortran,lto' target=x86_64_v4 %gcc@13.3.0.bootstrap ^binutils@2.43: +gas +headers +ld +lto +gold +nls target=x86_64_v4 %gcc@13.3.0.bootstrap ^zlib target=x86_64_v4 %gcc@13.3.0.bootstrap"
   view: false

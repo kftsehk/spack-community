@@ -10,7 +10,7 @@ compilers:
         cxx: /usr/bin/g++
         f77: /usr/bin/gfortran
         fc: /usr/bin/gfortran
-      spec: gcc@=11.4.1.el9
+      spec: gcc@=11.5.0.el9
       target: x86_64
   - compiler:
       environment: {}

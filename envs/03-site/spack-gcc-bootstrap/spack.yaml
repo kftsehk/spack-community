@@ -3,7 +3,6 @@ spack:
     targets:
       granularity: generic
       host_compatible: true
-  # TODO: define gcc@11.4.1.el9 at compilers.yaml
   specs:
-    - 'gcc@13.3.0 +binutils+graphite+piclibs languages="c,c++,fortran" target=x86_64_v4 %gcc@11.4.1.el9 ^binutils@2.43: +gas +headers +ld +lto +gold +nls target=x86_64_v4 %gcc@11.4.1.el9 ^zlib target=x86_64_v4 %gcc@11.4.1.el9'
+    - 'gcc@13.3.0 +binutils+graphite+piclibs languages="c,c++,fortran" target=x86_64_v4 %gcc@11.5.0.el9 ^binutils@2.43: +gas +headers +ld +lto +gold +nls target=x86_64_v4 %gcc@11.5.0.el9 ^zlib target=x86_64_v4 %gcc@11.5.0.el9'
   view: false
