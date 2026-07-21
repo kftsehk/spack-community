@@ -11,7 +11,7 @@ $(SPACK_ENV_BUILD_FILES):
 %/spack.build: %/spack.lock $(SPACK_CONFIG_MAIN) $(FORCE_REBUILD_TARGET)
 	( \
 		for i in {1..$(NUM_PARALLEL_BUILDS)}; do \
-			$(SPACK_EXE) -e $* sync $(SPACK_SYNC_ARGS) & \
+			mkdir -p "$(SPACK_BUILD_STAGE_ROOT)-$$i" && TMPDIR="$(SPACK_BUILD_STAGE_ROOT)-$$i" $(SPACK_EXE) -e $* sync $(SPACK_SYNC_ARGS) & \
 			sleep 0.5; \
 		done; \
 		exitcode=0; \

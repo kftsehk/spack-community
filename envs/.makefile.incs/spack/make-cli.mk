@@ -42,7 +42,7 @@ lock@%: %/spack.yaml
 
 $(RELOCK_TARGETS):
 relock@%: %/spack.yaml
-	-rm $*/spack.lock
+	rm -f $*/spack.lock
 	$(MAKE) $*/spack.lock
 	@echo "[$*] relock completed"
 
@@ -53,7 +53,7 @@ build@%: %/spack.lock
 
 $(REBUILD_TARGETS):
 rebuild@%: %/spack.yaml 
-	-rm $*/spack.build $*/spack.lock
+	rm -f $*/spack.build $*/spack.lock
 	$(MAKE) $*/spack.build
 	@echo "[$*] rebuild completed"
 
