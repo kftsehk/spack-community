@@ -12,6 +12,7 @@ modules:
         autoload: direct
       core_compilers:
         - gcc@11.5.0.spack
+        - gcc@12.4.0
       gcc:
         autoload: direct
       hide_implicits: true
